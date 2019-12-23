@@ -57,3 +57,19 @@
   margin: 0;
   box-sizing: border-box;
 }
+@include b(select-dropdown__bottom-button){
+  background-color: $--color-primary;
+  color: white;
+  border-bottom-right-radius: $--border-radius-base;
+  border-bottom-left-radius: $--border-radius-base;
+  padding: $--button-mini-padding-vertical $--button-mini-padding-horizontal;
+  text-align: center;
+  cursor: pointer;
+  &:hover,
+  &:focus {
+    background-color: $--color-primary-light-1;
+  }
+  &:active{
+    background-color: $--color-primary;
+  }
+}

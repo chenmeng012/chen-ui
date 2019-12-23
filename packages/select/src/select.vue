@@ -128,6 +128,10 @@
             {{ emptyText }}
           </p>
         </template>
+        <div v-if="bottomButtonOption && bottomButtonOption.visible"
+             @click="handleBottomButtonClicked"
+             class="el-select-dropdown__bottom-button"
+        >{{bottomButtonOption.title}}</div>
       </el-select-menu>
     </transition>
   </div>
@@ -235,6 +239,17 @@
         return ['small', 'mini'].indexOf(this.selectSize) > -1
           ? 'mini'
           : 'small';
+      },
+      bottomButtonOption() {
+        let defaultOption = {
+          visible: false, // 是否显示
+          title: null, // 显示文本
+          closeAfterClick: true // 点击后是否关闭下拉选项
+        };
+        if (this.bottomButton) {
+          Object.assign(defaultOption, this.bottomButton);
+        }
+        return defaultOption;
       }
     },
 
@@ -302,7 +317,8 @@
       popperAppendToBody: {
         type: Boolean,
         default: true
-      }
+      },
+      bottomButton: Object
     },
 
     data() {
@@ -834,6 +850,15 @@
         } else {
           return getValueByPath(item.value, this.valueKey);
         }
+      },
+
+      handleBottomButtonClicked() {
+        if (this.bottomButtonOption.closeAfterClick) {
+          this.$nextTick(() => {
+            this.visible = false;
+          });
+        }
+        this.$emit('bottom-button-click');
       }
     },
 
